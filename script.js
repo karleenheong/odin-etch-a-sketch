@@ -1,16 +1,42 @@
 const container = document.querySelector("#container");
+const promptBtn = document.querySelector("#promptBtn");
 
-//create 16 x 16 divs
-const NUMBER_OF_SQUARES = 256;
+let numberOfSquares = 256;
 
-for(let i=0; i<NUMBER_OF_SQUARES; i++){
-  const square = document.createElement("div");
-  //square.style.backgroundColor = "blue";
-  //square.style.margin = "3px";
-  square.style.height = "50px";
-  square.style.width = "50px";
-  square.addEventListener("mouseenter", () => {
-    square.style.backgroundColor = "blue";
-  })
-  container.appendChild(square);
+buildGrid();
+
+promptBtn.addEventListener("click", () => {
+  let numSquaresPerSide = prompt("How many squares per side for the grid?");
+  if(numSquaresPerSide > 100){
+    numSquaresPerSide = 100;
+  }
+  numberOfSquares = numSquaresPerSide ** 2;
+  //destroy grid
+  removeAllChildNodes(container);
+  
+  buildGrid();
+})
+
+function removeAllChildNodes(parent){
+  while(parent.firstChild){
+    parent.removeChild(parent.firstChild);
+  }
 }
+
+function buildGrid(){
+  for(let i=0; i<numberOfSquares; i++){
+    const square = document.createElement("div");
+    // square.style.backgroundColor = "blue";
+    //square.style.border = "black solid 1px";
+    let side = (960/(Math.sqrt(numberOfSquares))).toString();
+    square.style.height = side+"px";
+    square.style.width = side+"px";
+    square.addEventListener("mouseenter", () => {
+      square.style.backgroundColor = "blue";
+    })
+    container.appendChild(square);
+  }
+}
+
+
+
