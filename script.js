@@ -23,6 +23,17 @@ function removeAllChildNodes(parent){
   }
 }
 
+function randomizeColor(){
+  let r = pickRandomValue();
+  let g = pickRandomValue();
+  let b = pickRandomValue();
+  return "rgb(" + r.toString() + "," + g.toString() + "," + b.toString() + ")";
+}
+
+function pickRandomValue(){
+  return Math.floor(Math.random() * 256);
+}
+
 function buildGrid(){
   for(let i=0; i<numberOfSquares; i++){
     const square = document.createElement("div");
@@ -32,8 +43,10 @@ function buildGrid(){
     square.style.height = side+"px";
     square.style.width = side+"px";
     square.addEventListener("mouseenter", () => {
-      square.style.backgroundColor = "blue";
-    })
+
+      color = randomizeColor();
+      square.style.backgroundColor = color;
+     })
     container.appendChild(square);
   }
 }
